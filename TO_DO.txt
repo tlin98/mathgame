@@ -1,0 +1,5 @@
+PHP - Math game
+Random ADD/MINUX/MULTIPY/DIVIDE
+Textbox for answer (check if number and not empty)
+Button says right/wrong
+Ask another question if right.

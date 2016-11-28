@@ -1,0 +1,174 @@
+body {
+	font-family: Arial, san-serif;
+	min-height: 500px;
+	background-color: #FFE5EA;
+	margin: auto;
+}
+
+header img {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+nav img {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar-toggle {
+	background-color: #FFDAB9;
+	border: 3px dotted #FFC0CB;
+}
+
+.icon-bar {
+  background-color: #cb8867;
+}
+
+.nav > li > a:hover {
+background-color: transparent;
+}
+
+.navbar-brand {
+	font-weight: bold;
+	font-size: 26px;
+	padding: 15px 0px 0px 15px;
+	margin: 0px;
+}
+
+.nav p {
+	margin: 0px;
+	font-size: 16px;
+}
+
+.navbar-xs {
+	text-align: left;
+	border: 2px dotted #FFC0CB;
+	padding: 5px;
+	margin: 20px;
+	height: 100%;
+	background-color: #FFDAB9;
+}
+
+.navbar-signs {
+	text-align: left;
+
+	padding: 5px;
+	margin: 20px;
+	height: 100%;
+}
+
+.nav > li > a {
+	padding: 15px 10px;
+	padding-left: 20px;
+}
+
+.visible-xs > .nav > li {
+	margin: 10px;
+	border: 2px dotted #FFC0CB;
+}
+
+.navbar-smmdlg {
+	text-align: center;
+	padding: 5px;
+	display: block;
+    width: 600px;
+    margin: 0 auto;
+}
+
+main {
+	margin: 20px;
+	border: 2px dotted #FFC0CB;
+	background-color: #FFDAB9;
+	text-align: justify;
+	padding: 10px;
+}
+
+.centertext {
+	text-align: center;
+	margin: auto;
+}
+
+.sources {
+	font-style: italic;
+}
+
+table {
+	width: 100%;
+	margin: auto;
+}
+
+td {
+	text-align: center;
+}
+
+th {
+	text-align: right;
+	width: 25%;
+}
+
+input {
+	width: 100%;
+}
+
+textarea {
+	width: 100%;
+}
+
+#submit {
+	width: auto;
+	margin-left: 325px;
+}
+
+.footer {
+	display: table;
+	text-align: center;
+	background-color: #FDF5E6;
+	border: 2px dotted #FFC0CB;
+	padding: 5px;
+	margin: auto;
+	margin-bottom: 5px;
+	width: 90%;
+    min-width: 600px;
+}
+
+.footer-xs {
+	margin: 20px;
+	background-color: #FDF5E6;
+	border: 2px dotted #FFC0CB;
+	text-align: justify;
+	padding: 10px;
+}
+
+footer p {
+	font-size: 10px;
+	margin: 5px;
+	color: #A1A1A1;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+footer a {
+	font-size: 10px;
+	margin: 5px;
+	color: #A1A1A1;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+a:link {
+	color: red;
+}
+
+a:visited {
+	color: green;
+}
+
+a:hover {
+	color: orange;
+}
+
+a:active {
+	color: cyan;
+}
