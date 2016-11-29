@@ -53,11 +53,8 @@ if (!empty($err)) {
 }
 
 include("include/header2.php");
-
-$totalPennies = $pennies + $nickels * 5 + $dimes * 10 + $quarters * 25 + $onedollars * 100 + $twodollars * 200;
-$totalDollars = $totalPennies / 100;
 ?>
-
+<h2>Please login to enjoy our math game.</h2>
 <h2><?php echo $name ?></h2>
 <div class="col-sm-6">
     <div class="col-xs-6">
