@@ -41,7 +41,7 @@ if (!empty($msg)) {
         </div>
         <div class="col-sm-9 form-group-req">
             <div>
-                <input type="text" class="form-control col-sm-10" id="password" name="password" placeholder="aaa"> </div>
+                <input type="password" class="form-control col-sm-10" id="password" name="password" placeholder="aaa"> </div>
         </div>
     </div>
     <div class="form-group">
