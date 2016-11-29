@@ -9,6 +9,7 @@ include("include/header.php");
 <h2>Please login to enjoy our math game.</h2>
 
 <?php
+    $_SESSION["login"] = false;
     $_SESSION["email"] = "";
     $_SESSION["password"] = "";
 

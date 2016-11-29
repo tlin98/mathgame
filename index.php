@@ -2,21 +2,23 @@
 extract($_POST);
 $err = "";
 
-// Blank state, first time opening the site.
-if (!isset($_SESSION["email"], $_SESSION["password"])) {
-    header("Location: login.php");
-    die();
+if ($_SESSION["login"] == false) {
+    // Blank state, first time opening the site.
+    if (!isset($email) && !isset($password)) {
+        header("Location: login.php");
+        die();
+    } else if (strcmp($email, "a@a.a") != 0 || strcmp($password, "aaa") != 0) {
+        $err = "Incorrect login credentials.";
+    }
+    if (!empty($err)) {
+        unset($_SESSION["email"]);
+        unset($_SESSION["password"]);
+        header("Location: login.php?msg=$err");
+        die();
+    }
 }
-
-if (strcmp($email, "a@a.a") != 0 || strcmp($password, "aaa") != 0) {
-    $err = "Incorrect login credentials.";
-}
-if (!empty($err)) {
-    header("Location: login.php?msg=$err");
-    die();
-}
-
 // If survive, login credentials correct
+$_SESSION["login"] = true;
 $_SESSION["email"] = $email;
 $_SESSION["password"] = $password;
 
@@ -29,13 +31,17 @@ if ($_SESSION["score"] == null) {
 }
 
 if (!is_numeric($answer) || empty($answer)) {
-    $matherr = "You must enter a number for your answer.";
+    $mathout = "You must enter a number for your answer.";
+    $_correct = false;
 } else if ($_SESSION["answer"] == $answer) {
     $_SESSION["score"]++;
     $_SESSION["count"]++;
+    $mathout = "Correct";
+    $_correct = true;
 } else {
+    $_correct = false;
     $_SESSION["count"]++;
-    $matherr = "INCORRECT, " . $_SESSION["num1"] . " ";
+    $mathout = "INCORRECT, " . $_SESSION["num1"] . " ";
     if ($operator == 0) { // add
         $answer = $number1 + $number2;
         $sign = "+";
@@ -104,21 +110,29 @@ $_SESSION["operator"] = $operator;
         <div class="row">
             <div class="col-sm-2 col-sm-offset-5">
                 <hr>
-                <input type="text" value="" class="form-control" id="answer" name="answer" placeholder="answer">
-            </div>
+                <input type="text" value="" class="form-control" id="answer" name="answer" placeholder="answer" autofocus></input>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-sm-offset-5 col-sm-2">
-            <button type="submit" class="btn btn-default" name="submit">Submit</button>
-        </div>
     </div>
+<div class="form-group">
+    <div class="col-sm-offset-5 col-sm-2">
+        <button type="submit" class="btn btn-default" name="submit">Submit</button>
+    </div>
+</div>
 </form>
 <div class="row">
     <div class="col-sm-offset-5 col-sm-2">
         <label>
-            <?php echo "Score: " . $_SESSION["score"] . " / " . $_SESSION["count"] ?>
+            <?php
+                if ($correct) {
+                echo "<span id=\"correct\" >";
+                } else {
+                echo "<span id=\"incorrect\" >";
+                }
+            echo $mathout . "</span>";
+            echo "Score: " . $_SESSION["score"] . " / " . $_SESSION["count"];
+            ?>
         </label>
     </div>
 </div>
-    <?php include("include/footer.php"); ?>
+<?php include("include/footer.php"); ?>

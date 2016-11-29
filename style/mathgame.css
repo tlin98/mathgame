@@ -18,3 +18,11 @@ hr {
     border-width: 1px;
     margin: 5px 0;
 }
+
+#correct {
+    color: green;
+}
+
+#incorrect {
+    color: red;
+}
