@@ -12,6 +12,9 @@ include("include/header.php");
     $_SESSION["login"] = false;
     $_SESSION["email"] = "";
     $_SESSION["password"] = "";
+    $_SESSION["count"] = 0;
+    $_SESSION["score"] = 0;
+
 
 if (!empty($msg)) {
     echo "<div class=\"alert alert-dismissible alert-danger\">
