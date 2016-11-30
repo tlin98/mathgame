@@ -30,32 +30,42 @@ if ($_SESSION["score"] == null) {
     $_SESSION["count"] = 0;
 }
 
-if (!is_numeric($answer) || empty($answer)) {
-    $mathout = "You must enter a number for your answer.";
-    $_correct = false;
-} else if ($_SESSION["answer"] == $answer) {
+// Fraction testing
+list($top, $bottom) = explode('/', $answer);
+if ($bottom == 0) {
+    $fraction = 0;
+} else {
+    $fraction = $top / $bottom;
+}
+
+if ($_SESSION["answer"] == $answer || $fraction == $_SESSION["number1"] / $_SESSION["number2"]) {
     $_SESSION["score"]++;
     $_SESSION["count"]++;
     $mathout = "Correct";
-    $_correct = true;
+    $correct = true;
+} else if ((!is_numeric($answer) || empty($answer)) && $answer != 0) {
+    $mathout = "You must enter a number for your answer.";
+    $correct = false;
 } else {
-    $_correct = false;
+    $correct = false;
     $_SESSION["count"]++;
-    $mathout = "INCORRECT, " . $_SESSION["num1"] . " ";
-    if ($operator == 0) { // add
+    $number1 = $_SESSION["number1"];
+    $number2 = $_SESSION["number2"];
+    $mathout = "INCORRECT, " . $_SESSION["number1"] . " ";
+    if ($_SESSION["operator"] == 0) { // add
         $answer = $number1 + $number2;
         $sign = "+";
-    } else if ($operator == 1) { // minus
+    } else if ($_SESSION["operator"] == 1) { // minus
         $answer = $number1 - $number2;
         $sign = "-";
-    } else if ($operator == 2) { // multiply
+    } else if ($_SESSION["operator"] == 2) { // multiply
         $answer = $number1 * $number2;
         $sign = "x";
-    } else if ($operator == 3) { // divide
+    } else if ($_SESSION["operator"] == 3) { // divide
         $answer = $number1 / $number2;
         $sign = "&#247;";
     }
-    $matherr .= $sign . " " . $$_SESSION["num2"] . " is " . $answer . ".";
+    $mathout .= $sign . " " . $_SESSION["number2"] . " is " . $answer . ".";
 }
 
 // New Question
@@ -110,29 +120,36 @@ $_SESSION["operator"] = $operator;
         <div class="row">
             <div class="col-sm-2 col-sm-offset-5">
                 <hr>
-                <input type="text" value="" class="form-control" id="answer" name="answer" placeholder="answer" autofocus></input>
+                <input type="text" value="" class="form-control" id="answer" name="answer" placeholder="answer" align="right" autofocus></input>
         </div>
     </div>
     </div>
 <div class="form-group">
-    <div class="col-sm-offset-5 col-sm-2">
-        <button type="submit" class="btn btn-default" name="submit">Submit</button>
+    <div class="col-sm-offset-5 text-center col-sm-2">
+        <button type="submit" class="btn btn-success" name="submit">Submit</button>
     </div>
 </div>
 </form>
 <div class="row">
-    <div class="col-sm-offset-5 col-sm-2">
+    <div class="col-sm-offset-3 text-center col-sm-6">
         <label>
             <?php
-                if ($correct) {
-                echo "<span id=\"correct\" >";
-                } else {
-                echo "<span id=\"incorrect\" >";
-                }
+    if ($correct) {
+        echo "<span id=\"correct\" >";
+    } else {
+        echo "<span id=\"incorrect\" >";
+    }
             echo $mathout . "</span>";
+            ?> </label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-offset-5 text-center col-sm-2">
+        <label>
+            <?php
             echo "Score: " . $_SESSION["score"] . " / " . $_SESSION["count"];
             ?>
         </label>
     </div>
 </div>
-<?php include("include/footer.php"); ?>
+    <?php include("include/footer.php"); ?>
