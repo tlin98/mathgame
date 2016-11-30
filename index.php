@@ -24,12 +24,6 @@ $_SESSION["password"] = $password;
 
 include("include/header.php");
 // Code for math game
-$_SESSION["score"];
-if ($_SESSION["score"] == null) {
-    $_SESSION["score"] = 0;
-    $_SESSION["count"] = 0;
-}
-
 // Fraction testing
 list($top, $bottom) = explode('/', $answer);
 if ($bottom == 0) {
@@ -38,14 +32,15 @@ if ($bottom == 0) {
     $fraction = $top / $bottom;
 }
 
-if ($_SESSION["answer"] == $answer || $fraction == $_SESSION["number1"] / $_SESSION["number2"]) {
+// Answer checking
+if ((!is_numeric($answer) || empty($answer)) && $answer != 0) {
+    $mathout = "You must enter a number for your answer.";
+    $correct = false;
+} else if ($_SESSION["answer"] == $answer || $fraction == $_SESSION["number1"] / $_SESSION["number2"]) {
     $_SESSION["score"]++;
     $_SESSION["count"]++;
     $mathout = "Correct";
     $correct = true;
-} else if ((!is_numeric($answer) || empty($answer)) && $answer != 0) {
-    $mathout = "You must enter a number for your answer.";
-    $correct = false;
 } else {
     $correct = false;
     $_SESSION["count"]++;
@@ -69,7 +64,6 @@ if ($_SESSION["answer"] == $answer || $fraction == $_SESSION["number1"] / $_SESS
 }
 
 // New Question
-
 $number1 = rand(0, 20);
 $number2 = rand(0, 20);
 $operator = rand(0, 3);
@@ -86,6 +80,8 @@ if ($operator == 0) { // add
     $answer = $number1 / $number2;
     $sign = "&#247;";
 }
+
+// Session variables
 $_SESSION["answer"] = $answer;
 $_SESSION["number1"] = $number1;
 $_SESSION["number2"] = $number2;

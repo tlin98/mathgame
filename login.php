@@ -14,6 +14,10 @@ include("include/header.php");
     $_SESSION["password"] = "";
     $_SESSION["count"] = 0;
     $_SESSION["score"] = 0;
+    $_SESSION["number1"] = 0;
+    $_SESSION["number2"] = 0;
+    $_SESSION["answer"] = 0;
+    $_SESSION["operator"] = 0;
 
 
 if (!empty($msg)) {
