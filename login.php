@@ -9,15 +9,16 @@ include("include/header.php");
 <h2>Please login to enjoy our math game.</h2>
 
 <?php
-    $_SESSION["login"] = false;
+$_SESSION["count"] = -1;
+$_SESSION["score"] = -1;
+/*$_SESSION["login"] = false;
     $_SESSION["email"] = "";
     $_SESSION["password"] = "";
-    $_SESSION["count"] = 0;
-    $_SESSION["score"] = 0;
+
     $_SESSION["number1"] = 0;
     $_SESSION["number2"] = 0;
     $_SESSION["answer"] = 0;
-    $_SESSION["operator"] = 0;
+    $_SESSION["operator"] = 0;*/
 
 
 if (!empty($msg)) {
@@ -34,7 +35,7 @@ if (!empty($msg)) {
         </div>
         <div class="col-sm-9 form-group-req">
             <div>
-                <input type="email" class="form-control" id="email" name="email" placeholder="a@a.a"> </div>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email"> </div>
         </div>
     </div>
     <div class="form-group">
@@ -43,7 +44,7 @@ if (!empty($msg)) {
         </div>
         <div class="col-sm-9 form-group-req">
             <div>
-                <input type="password" class="form-control" id="password" name="password" placeholder="aaa"> </div>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password"> </div>
         </div>
     </div>
     <div class="form-group">

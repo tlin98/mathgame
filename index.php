@@ -26,41 +26,57 @@ include("include/header.php");
 // Code for math game
 // Fraction testing
 list($top, $bottom) = explode('/', $answer);
-if ($bottom == 0) {
+if ($bottom == 0 || $top == 0) {
     $fraction = 0;
 } else {
     $fraction = $top / $bottom;
 }
+// Using orignal number values
+list($top, $bottom) = explode('/', $_SESSION["number1"] . "/" . $_SESSION["number2"]);
+if ($bottom == 0 || $top == 0) {
+    $fractionOriginal = 0;
+} else {
+    $fractionOriginal = $top / $bottom;
+}
 
 // Answer checking
-if ((!is_numeric($answer) || empty($answer)) && $answer != 0) {
-    $mathout = "You must enter a number for your answer.";
-    $correct = false;
-} else if ($_SESSION["answer"] == $answer || $fraction == $_SESSION["number1"] / $_SESSION["number2"]) {
-    $_SESSION["score"]++;
-    $_SESSION["count"]++;
-    $mathout = "Correct";
-    $correct = true;
+if ($_SESSION["score"] == -1 && $_SESSION["count"] == -1) {
+    $_SESSION["score"] = 0;
+    $_SESSION["count"] = 0;
 } else {
-    $correct = false;
-    $_SESSION["count"]++;
-    $number1 = $_SESSION["number1"];
-    $number2 = $_SESSION["number2"];
-    $mathout = "INCORRECT, " . $_SESSION["number1"] . " ";
-    if ($_SESSION["operator"] == 0) { // add
-        $answer = $number1 + $number2;
-        $sign = "+";
-    } else if ($_SESSION["operator"] == 1) { // minus
-        $answer = $number1 - $number2;
-        $sign = "-";
-    } else if ($_SESSION["operator"] == 2) { // multiply
-        $answer = $number1 * $number2;
-        $sign = "x";
-    } else if ($_SESSION["operator"] == 3) { // divide
-        $answer = $number1 / $number2;
-        $sign = "&#247;";
+    if (!is_numeric($answer) || (empty($answer) && $answer != 0) || $_SESSION["count"] != $count) {
+        $mathout = "You must enter a number for your answer.";
+        $correct = false;
+    } else if ($_SESSION["answer"] == $answer || $fraction == $fractionOriginal) { // checks against the input fraction vs orignal question fraction
+        $_SESSION["score"]++;
+        $_SESSION["count"]++;
+        $mathout = "Correct";
+        $correct = true;
+    } else {
+        $correct = false;
+        $_SESSION["count"]++;
+        $number1 = $_SESSION["number1"];
+        $number2 = $_SESSION["number2"];
+        if ($_SESSION["operator"] == 0) { // add
+            $answer = $number1 + $number2;
+            $sign = "+";
+        } else if ($_SESSION["operator"] == 1) { // minus
+            $answer = $number1 - $number2;
+            $sign = "-";
+        } else if ($_SESSION["operator"] == 2) { // multiply
+            $answer = $number1 * $number2;
+            $sign = "x";
+        } else if ($_SESSION["operator"] == 3) { // divide
+            $answer = $number1 / $number2;
+            $sign = "&#247;";
+        }
+        // Fraction output
+        if (is_int($answer)) {
+            $mathout = "INCORRECT, " . $_SESSION["number1"] . " " . $sign . " " . $_SESSION["number2"] . " is " . $answer . ".";
+        } else {
+            $mathout = "INCORRECT, " . $_SESSION["number1"] . " " . $sign . " " . $_SESSION["number2"] . " is " . $top . "/" . $bottom . ". ( " . $answer . " )";
+        }
     }
-    $mathout .= $sign . " " . $_SESSION["number2"] . " is " . $answer . ".";
 }
 
 // New Question
@@ -77,7 +93,11 @@ if ($operator == 0) { // add
     $answer = $number1 * $number2;
     $sign = "x";
 } else if ($operator == 3) { // divide
-    $answer = $number1 / $number2;
+    if ($number2 == 0 || $number1 == 0) {
+        $answer = 0;
+    } else {
+        $answer = $number1 / $number2;
+    }
     $sign = "&#247;";
 }
 
@@ -87,7 +107,7 @@ $_SESSION["number1"] = $number1;
 $_SESSION["number2"] = $number2;
 $_SESSION["operator"] = $operator;
 ?>
-<form class="form-horizontal" action="login.php" method="post">
+<form class="form-horizontal" action="logout.php" method="post">
     <div class="row">
         <div class="col-sm-4 col-sm-offset-4">
             <h1 class="text-center">Math Game</h1> </div>
@@ -98,7 +118,7 @@ $_SESSION["operator"] = $operator;
         </div>
     </div>
 </form>
-<form class="form-horizontal" action="index.php" method="post">
+<form class="form-horizontal" action="index.php" method="post" autocomplete="off">
     <div class="row">
         <label class="col-sm-1 text-right col-sm-offset-6">
             <?php echo $number1 ?>
@@ -122,8 +142,9 @@ $_SESSION["operator"] = $operator;
     </div>
 <div class="form-group">
     <div class="col-sm-offset-5 text-center col-sm-2">
-        <button type="submit" class="btn btn-success" name="submit">Submit</button>
-    </div>
+        <input type="hidden" value="<?php echo $_SESSION["count"] ?>" name="count" ></input>
+    <button type="submit" class="btn btn-success" name="submit">Submit</button>
+</div>
 </div>
 </form>
 <div class="row">
@@ -148,4 +169,4 @@ $_SESSION["operator"] = $operator;
         </label>
     </div>
 </div>
-    <?php include("include/footer.php"); ?>
+<?php include("include/footer.php"); ?>
